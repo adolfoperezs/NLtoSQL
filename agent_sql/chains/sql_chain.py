@@ -28,6 +28,21 @@ class SQLAgentChain:
         # LLMChain.invoke devuelve un diccionario, extraemos la clave 'text'
         response = self.chain.invoke({"user_query": user_query, "schema": schema})
         raw_sql = response.get('text', '')
+        
+        # Manejar problemas de codificación del modelo
+        if isinstance(raw_sql, bytes):
+            try:
+                raw_sql = raw_sql.decode('utf-8')
+            except UnicodeDecodeError:
+                raw_sql = raw_sql.decode('latin1')
+        elif isinstance(raw_sql, str):
+            # Si ya es string, asegurar que esté en UTF-8
+            try:
+                raw_sql.encode('utf-8').decode('utf-8')
+            except UnicodeDecodeError:
+                # Si falla, intentar con latin1
+                raw_sql = raw_sql.encode('latin1').decode('utf-8')
+        
         return self._validate_sql(raw_sql)
 
     def _validate_sql(self, sql: str) -> str:

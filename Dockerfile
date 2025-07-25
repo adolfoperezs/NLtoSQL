@@ -13,8 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia el resto del código de la aplicación
 COPY . .
 
-# Expone el puerto si es necesario (para futuras APIs)
-# EXPOSE 8000
+# Expone el puerto 8000 para la API
+EXPOSE 8000
 
-# Comando por defecto para ejecutar la aplicación
-CMD ["python", "-m", "agent_sql.main"] 
+# Comando para ejecutar la aplicación FastAPI con Uvicorn
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"] 
