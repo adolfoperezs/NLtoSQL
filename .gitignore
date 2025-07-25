@@ -1,0 +1,21 @@
+# Variables de entorno
+.env
+
+# Entorno virtual
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Pytest
+.pytest_cache/
+
+# VS Code / Cursor
+.vscode/
+.cursor/
+
+# Otros
+*.log
+.DS_Store 
